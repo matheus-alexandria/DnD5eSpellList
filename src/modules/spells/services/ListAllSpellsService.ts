@@ -4,6 +4,11 @@ import { inject, injectable } from 'tsyringe';
 import ISpellsRepository from '../repositories/ISpellsRepository';
 import Spell from '../infra/typeorm/entities/Spell';
 
+interface IRequestFilters {
+  level?: number;
+  type?: string;
+}
+
 @injectable()
 export default class ListAllSpellsService {
   constructor(
@@ -11,8 +16,14 @@ export default class ListAllSpellsService {
     private spellsRepository: ISpellsRepository
   ) {}
 
-  public async execute(): Promise<Spell[]> {
-    const spells = await this.spellsRepository.findAllSpells();
+  public async execute(filters: IRequestFilters): Promise<Spell[]> {
+    let spells: Spell[] = [];
+
+    if (filters.level) {
+      spells = await this.spellsRepository.findSpellsByFilters(filters);
+    } else {
+      spells = await this.spellsRepository.findAllSpells();
+    }
 
     const names: string[] = [];
 
