@@ -23,6 +23,7 @@ class SpellsRepository implements ISpellRepository {
       where: {
         level: filters.level,
         type: Like(`%${filters.type}%`),
+        class: Like(`%${filters.class}%`),
       },
     });
 
