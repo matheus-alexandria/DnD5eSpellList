@@ -15,7 +15,7 @@ class Spell {
   @Column()
   name: string;
 
-  @Column()
+  @Column('int')
   level: number;
 
   @Column()

@@ -5,16 +5,20 @@ import ListAllSpellsService from '@modules/spells/services/ListAllSpellsService'
 
 export default class SpellsController {
   public async index(request: Request, response: Response): Promise<Response> {
-    const { level, type, classe } = request.query;
+    try {
+      const { level, type, classe } = request.query;
 
-    const listAllSpells = container.resolve(ListAllSpellsService);
+      const listAllSpells = container.resolve(ListAllSpellsService);
 
-    const spells = await listAllSpells.execute({
-      level: Number(level),
-      type: String(type),
-      class: String(classe),
-    });
+      const spells = await listAllSpells.execute({
+        level: Number(level),
+        type: String(type),
+        class: String(classe),
+      });
 
-    return response.json(spells);
+      return response.json(spells);
+    } catch (err) {
+      return response.json({ Error: err.message });
+    }
   }
 }
