@@ -1,4 +1,4 @@
-import { getRepository, Repository, Like } from 'typeorm';
+import { getRepository, Repository, Like, In } from 'typeorm';
 
 import ISpellRepository from '@modules/spells/repositories/ISpellsRepository';
 import IFiltersDTO from '@modules/spells/dtos/IFiltersDTO';
@@ -21,7 +21,7 @@ class SpellsRepository implements ISpellRepository {
   public async findSpellsByFilters(filters: IFiltersDTO): Promise<Spell[]> {
     const spells = await this.ormRepository.find({
       where: {
-        level: filters.level,
+        level: In(filters.levelArray),
         type: Like(`%${filters.type}%`),
         class: Like(`%${filters.class}%`),
       },

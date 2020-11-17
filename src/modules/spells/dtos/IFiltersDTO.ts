@@ -1,5 +1,6 @@
 export default interface IFiltersDTO {
-  level?: number;
+  level?: string | number;
+  levelArray: number[];
   type?: string;
   class?: string;
 }

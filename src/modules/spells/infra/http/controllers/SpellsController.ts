@@ -11,9 +11,10 @@ export default class SpellsController {
       const listAllSpells = container.resolve(ListAllSpellsService);
 
       const spells = await listAllSpells.execute({
-        level: Number(level),
+        level: String(level),
         type: String(type),
         class: String(classe),
+        levelArray: [],
       });
 
       return response.json(spells);
